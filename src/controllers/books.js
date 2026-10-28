@@ -15,7 +15,7 @@ export async function getBooksHandler(req, res) {
     }
 }
 
-// GET /books/:id - Retrieve one book by ID
+// GET /books/:id - Retrieve a single book
 export async function getBookByIdHandler(req, res) {
     try {
         const book = await getBookById(req.params.id);
@@ -26,11 +26,11 @@ export async function getBookByIdHandler(req, res) {
             });
         }
 
-        res.status(200).json(book);
+        return res.status(200).json(book);
     } catch (error) {
         console.error('Error retrieving book:', error);
 
-        res.status(500).json({
+        return res.status(500).json({
             message: 'Internal server error'
         });
     }
