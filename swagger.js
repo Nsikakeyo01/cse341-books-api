@@ -7,11 +7,22 @@ const doc = {
         description: 'REST API for managing books and authors using Express and MongoDB.',
         version: '1.0.0'
     },
-    host: 'localhost:3000',
-    basePath: '/',
-    schemes: ['http'],
+
+    // Production and local development servers
+    servers: [
+        {
+            url: 'https://cse341-books-api-0drw.onrender.com',
+            description: 'Production server on Render'
+        },
+        {
+            url: 'http://localhost:3000',
+            description: 'Local development server'
+        }
+    ],
+
     consumes: ['application/json'],
     produces: ['application/json'],
+
     tags: [
         {
             name: 'Books',
@@ -22,6 +33,7 @@ const doc = {
             description: 'Authors management endpoints'
         }
     ],
+
     definitions: {
         Book: {
             id: 'b1',

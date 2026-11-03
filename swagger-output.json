@@ -7,7 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/"
+      "url": "https://cse341-books-api-0drw.onrender.com",
+      "description": "Production server on Render"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
     }
   ],
   "tags": [
@@ -88,6 +93,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -158,6 +166,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
