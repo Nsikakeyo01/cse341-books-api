@@ -35,11 +35,9 @@ function validateBook(book) {
 export async function getBooksHandler(req, res) {
     try {
         const books = await getAllBooks();
-
         return res.status(200).json(books);
     } catch (error) {
         console.error('Error fetching books:', error);
-
         return res.status(500).json({
             message: 'Failed to retrieve books'
         });
@@ -49,7 +47,15 @@ export async function getBooksHandler(req, res) {
 // GET /books/:id - Retrieve one book
 export async function getBookByIdHandler(req, res) {
     try {
-        const book = await getBookById(req.params.id);
+        const id = req.params.id.trim();
+
+        if (!id) {
+            return res.status(400).json({
+                message: 'A valid book ID is required'
+            });
+        }
+
+        const book = await getBookById(id);
 
         if (!book) {
             return res.status(404).json({
@@ -60,7 +66,6 @@ export async function getBookByIdHandler(req, res) {
         return res.status(200).json(book);
     } catch (error) {
         console.error('Error fetching book:', error);
-
         return res.status(500).json({
             message: 'Failed to retrieve book'
         });
@@ -109,7 +114,6 @@ export async function createBookHandler(req, res) {
         return res.status(201).json(newBook);
     } catch (error) {
         console.error('Error creating book:', error);
-
         return res.status(500).json({
             message: 'Failed to create book'
         });
@@ -119,8 +123,14 @@ export async function createBookHandler(req, res) {
 // PUT /books/:id - Update an existing book
 export async function updateBookHandler(req, res) {
     try {
-        const { id } = req.params;
+        const id = req.params.id.trim();
         const { title, authorId, publicationDate } = req.body || {};
+
+        if (!id) {
+            return res.status(400).json({
+                message: 'A valid book ID is required'
+            });
+        }
 
         if (!validateBook({ id, title, authorId, publicationDate })) {
             return res.status(400).json({
@@ -157,7 +167,6 @@ export async function updateBookHandler(req, res) {
         return res.status(200).json(updatedBook);
     } catch (error) {
         console.error('Error updating book:', error);
-
         return res.status(500).json({
             message: 'Failed to update book'
         });
@@ -167,7 +176,13 @@ export async function updateBookHandler(req, res) {
 // DELETE /books/:id - Delete a book
 export async function deleteBookHandler(req, res) {
     try {
-        const { id } = req.params;
+        const id = req.params.id.trim();
+
+        if (!id) {
+            return res.status(400).json({
+                message: 'A valid book ID is required'
+            });
+        }
 
         const deletedCount = await deleteBook(id);
 
@@ -180,7 +195,6 @@ export async function deleteBookHandler(req, res) {
         return res.status(204).send();
     } catch (error) {
         console.error('Error deleting book:', error);
-
         return res.status(500).json({
             message: 'Failed to delete book'
         });
